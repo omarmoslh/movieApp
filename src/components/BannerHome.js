@@ -4,39 +4,38 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const BannerHome = () => {
-  const bannerData = useSelector(state => state.movieoData.bannerData);
-  const imageURL = useSelector(state => state.movieoData.imageURL);
+  const bannerData = useSelector((state) => state.movieoData.bannerData);
+  const imageURL = useSelector((state) => state.movieoData.imageURL);
   const [currentImage, setCurrentImage] = useState(0);
 
   const handleNext = () => {
     if (currentImage < bannerData.length - 1) {
-      setCurrentImage(preve => preve + 1);
+      setCurrentImage((preve) => preve + 1);
     }
   };
   const handlePrevious = () => {
     if (currentImage > 0) {
-        setCurrentImage(preve => preve - 1);
-      }
+      setCurrentImage((preve) => preve - 1);
+    }
   };
   useEffect(() => {
-    const interval = setInterval(()=>{
-        if (currentImage < bannerData.length - 1) {
-            handleNext()
-          }else{
-            setCurrentImage(0)
-          }
-    },5000)
-    return ()=>clearInterval(interval)
-  }, [bannerData, imageURL,currentImage])
-  
+    const interval = setInterval(() => {
+      if (currentImage < bannerData.length - 1) {
+        handleNext();
+      } else {
+        setCurrentImage(0);
+      }
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [bannerData, imageURL, currentImage]);
+
   return (
     <section className="h-full w-full">
       <div className="flex min-h-full max-h[95vh] overflow-hidden">
         {bannerData.map((data, index) => {
-            
           return (
             <div
-            key={data.id+"bannerHome"+index}
+              key={data.id + "bannerHome" + index}
               className="min-w-full min-h-[450px] lg:min-h-full overflow-hidden relative group transition-all"
               style={{ transform: `translateX(-${currentImage * 100}%)` }}
             >
@@ -77,8 +76,10 @@ const BannerHome = () => {
                     <span>|</span>
                     <p>View : {Number(data.popularity).toFixed(0)}</p>
                   </div>
-                  <Link to={"/"+data?.media_type+"/"+data?.id} className="bg-white px-4 py-2 text-black font-bold rounded mt-4 hover:bg-gradient-to-r from-orange-500 to-red-900 shadow-md transition-all hover:scale-105">
-                    Play Now
+                  <Link to={"/" + data?.media_type + "/" + data?.id}>
+                    <button className="bg-white px-4 py-2 text-black font-bold rounded mt-4 hover:bg-gradient-to-r from-orange-500 to-red-900 shadow-md transition-all hover:scale-105">
+                      Play Now
+                    </button>
                   </Link>
                 </div>
               </div>
